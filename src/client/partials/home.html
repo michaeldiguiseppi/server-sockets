@@ -21,8 +21,8 @@
       </thead>
       <tbody>
         <tr ng-repeat="notif in vm.notifications"
-            ng-class="{ 'warning': !vm.notif.read }"
-            ng-click="vm.selected = notif">
+            ng-class="{ 'warning': !notif.read }"
+            ng-click="vm.markAsRead(notif)">
           <td>{{ notif.subject }}</td>
           <td>{{ notif.sender }}</td>
         </tr>
@@ -33,7 +33,7 @@
 
   <div class="col-lg-6">
     <br>
-    
+
     <div class="well well-lg">
       <h3>{{ vm.selected.subject }}</h3>
       <h4>{{ vm.selected.sender }}</h4>

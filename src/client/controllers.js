@@ -11,5 +11,21 @@
     NotificationService.get().then(function (notifications) {
       vm.notifications = notifications.data;
     });
+
+    vm.markAsRead = markAsRead;
+
+    function markAsRead (notif) {
+      if ( notif.read ) { vm.selected = notif; }
+      else {
+        NotificationService.read(notif.id)
+        .then(function (notification) {
+          var selected = vm.notifications.filter(function (notif) {
+            return notif._id === notification.data._id;
+          })[0];
+          selected.read = true;
+          vm.selected = selected;
+        });
+      }
+    }
   }
 })();

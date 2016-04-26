@@ -4,6 +4,7 @@ var db = require('../db');
 router.get('/ping', ping);
 router.get('/notifications', get);
 router.post('/notifications', post);
+router.put('/notifications/:id/read', read);
 
 module.exports = router;
 
@@ -33,3 +34,17 @@ function post (req, res) {
     });
   };
 };
+
+function read (req, res) {
+  db.Notification.findById(req.params.id)
+  .then(function (notification) {
+    notification.read = true;
+    return notification.save();
+  })
+  .then(function (notification) {
+    res.status(200).json(notification);
+  })
+  .catch(function (notification) {
+    res.status(422).json(notification);
+  });
+}

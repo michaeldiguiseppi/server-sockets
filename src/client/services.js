@@ -10,6 +10,9 @@
     return {
       get: function () {
         return $http.get('/api/notifications');
+      },
+      read: function (id) {
+        return $http.put('/api/notifications/' + id + '/read');
       }
     };
   }
