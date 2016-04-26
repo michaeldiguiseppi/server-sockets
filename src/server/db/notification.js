@@ -4,6 +4,8 @@ mongoose.Promise = require('bluebird');
 
 var NotificationSchema = new Schema({
   content: String,
+  subject: String,
+  sender: String,
   read: {
     type: Boolean,
     default: false

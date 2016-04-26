@@ -7,7 +7,9 @@ function seed () {
   var notifications = [];
   for ( var i = 0; i < 10; i++ ) {
     notifications.push({
-      content: faker.lorem.words(10)
+      content: faker.lorem.paragraphs(2),
+      sender: faker.internet.email(),
+      subject: faker.lorem.words(5)
     });
   }
 
