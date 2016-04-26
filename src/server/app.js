@@ -9,7 +9,8 @@ var db = require('./db');
 
 
 // *** routes *** //
-var routes = require('./routes/index.js');
+var routes = require('./routes/index');
+var api = require('./routes/api');
 
 
 // *** express instance *** //
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** main routes *** //
 app.use('/', routes);
+app.use('/api', api);
 
 
 // *** seed data *** //
