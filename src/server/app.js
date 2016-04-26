@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var db = require('./db');
 
 
 // *** routes *** //
@@ -25,6 +26,15 @@ app.use(express.static(path.join(__dirname, '../client')));
 
 // *** main routes *** //
 app.use('/', routes);
+
+
+// *** seed data *** //
+db.Notification.count({})
+.then(function (notifications) {
+  if ( !notifications ) { return db.seed(); }
+}).catch(function (error) {
+  console.log('Error while seeding:', error);
+});
 
 
 // catch 404 and forward to error handler
