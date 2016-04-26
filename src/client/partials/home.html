@@ -1,1 +1,43 @@
-<h1>Yo!</h1>
+<br>
+
+<div class="row">
+  <div class="col-lg-12">
+    <button class="btn btn-primary" type="button">
+      Unread Messages <span class="badge">{{ vm.notifications.length || 0 }}</span>
+    </button>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-lg-6">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Subject</th>
+          <th>Sender</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="notif in vm.notifications"
+            ng-class="{ 'warning': !vm.notif.read }"
+            ng-click="vm.selected = notif">
+          <td>{{ notif.subject }}</td>
+          <td>{{ notif.sender }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-lg-6">
+    <br>
+    
+    <div class="well well-lg">
+      <h3>{{ vm.selected.subject }}</h3>
+      <h4>{{ vm.selected.sender }}</h4>
+      <p>{{ vm.selected.content }}</p>
+    </div>
+  </div>
+</div>

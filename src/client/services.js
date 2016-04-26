@@ -1,1 +1,16 @@
-// add services
+(function () {
+  'use strict';
+
+  angular.module('myApp')
+    .service('NotificationService', NotificationService);
+
+  NotificationService.$inject = ['$http'];
+
+  function NotificationService ($http) {
+    return {
+      get: function () {
+        return $http.get('/api/notifications');
+      }
+    };
+  }
+})();
