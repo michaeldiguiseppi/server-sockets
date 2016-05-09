@@ -9,17 +9,25 @@ router.put('/notifications/:id/read', read);
 module.exports = router;
 
 ///////////////////////////
+/*
+
+io.on('connection', function (socket) {
+  socket.emit('status', { status: 'ok' });
+});
+
+*/
 
 function ping (req, res) {
+  global.io.emit('status', 'ok');
   res.status(200).json({ message: 'pong!' });
-};
+}
 
 function get (req, res) {
   db.Notification.find({})
   .then(function (notifications) {
     res.status(200).json(notifications);
   });
-};
+}
 
 function post (req, res) {
   if ( !req.body || !req.body.content ) {
@@ -32,8 +40,8 @@ function post (req, res) {
     .catch(function (notification) {
       res.status(422).json(notification);
     });
-  };
-};
+  }
+}
 
 function read (req, res) {
   db.Notification.findById(req.params.id)
@@ -42,6 +50,7 @@ function read (req, res) {
     return notification.save();
   })
   .then(function (notification) {
+    global.io.emit('status', 'Message read.');
     res.status(200).json(notification);
   })
   .catch(function (notification) {
