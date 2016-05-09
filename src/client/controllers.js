@@ -17,7 +17,7 @@
     function markAsRead (notif) {
       if ( notif.read ) { vm.selected = notif; }
       else {
-        NotificationService.read(notif.id)
+        NotificationService.read(notif._id)
         .then(function (notification) {
           var selected = vm.notifications.filter(function (notif) {
             return notif._id === notification.data._id;
