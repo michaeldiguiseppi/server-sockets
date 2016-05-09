@@ -50,7 +50,7 @@ function read (req, res) {
     return notification.save();
   })
   .then(function (notification) {
-    global.io.emit('status', 'Message read.');
+    global.io.emit('status', req.params.id);
     res.status(200).json(notification);
   })
   .catch(function (notification) {

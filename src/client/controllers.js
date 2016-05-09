@@ -4,12 +4,27 @@
   angular.module('myApp')
     .controller('myController', myController);
 
-  myController.$inject = ['NotificationService'];
+  myController.$inject = ['$scope', 'NotificationService', 'SocketService'];
 
-  function myController (NotificationService) {
+  function myController ($scope, NotificationService, SocketService) {
     var vm = this;
     NotificationService.get().then(function (notifications) {
       vm.notifications = notifications.data;
+      vm.unreadMessages = vm.notifications.filter(function(notif) {
+        return notif.read === false;
+      });
+    });
+
+    SocketService.forward('status', $scope);
+    $scope.$on('socket:status', function (ev, data) {
+      console.log('from angular!', ev, data);
+      var unreadMessages = [];
+      vm.notifications.forEach(function(notification) {
+        if (notification.read === false) {
+          unreadMessages.push(notification);
+        }
+        vm.unreadMessages = unreadMessages;
+      });
     });
 
     vm.markAsRead = markAsRead;
